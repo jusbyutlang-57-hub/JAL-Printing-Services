@@ -1,6 +1,8 @@
-var FB_ID = "JALPrintingServices"; 
+var FB_ID = "JALPrintingServices";
 var EMAIL = "garadon90@gmail.com";
 var REVIEWS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT35APsroBL2D6zoAkVcwBb3vwz2kKI0AbgXi69BiWoe0Et1_ds1Ez2qJMDAmdQ6IJm7xZjTRU41ST_/pub?gid=913573391&single=true&output=csv";
+var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeDuwS7VRbY7i_gaHWLp3GT9NlKUASBOoQDwS8P4TMcY9PUsQ/formResponse";
+// =====================
 var MSG = "https://m.me/" + FB_ID;
 ["msgr","msgr2","msgr3","msgr4"].forEach(function(i){
   var el=document.getElementById(i); if(el) el.href=MSG;
@@ -57,31 +59,11 @@ document.getElementById("qf").addEventListener("submit",function(e){
 function copy(){try{navigator.clipboard.writeText(text)}catch(err){}}
 document.getElementById("cp").addEventListener("click",function(){copy();this.textContent="Copied"});
 
-/* ---------- FEEDBACK FORM ---------- */
-var rt="";
-document.getElementById("rf").addEventListener("submit",function(e){
-  e.preventDefault();
-  var rate=document.querySelector('input[name="rate"]:checked');
-  var ok=true;
-  document.getElementById("er").textContent=rate?"":(ok=false,"Choose a star rating.");
-  document.getElementById("ec").textContent=v("rc")?"":(ok=false,"Write a short comment.");
-  if(!ok)return;
-  rt="REVIEW - JAL Printing Services\n"+
-   "Name: "+(v("rn")||"Anonymous")+"\nService: "+v("rs")+
-   "\nRating: "+rate.value+" / 5\nComment: "+v("rc")+
-   "\nOK to show on website: "+(document.getElementById("rp").checked?"Yes":"No");
-  document.getElementById("rsum").textContent=rt;
-  document.getElementById("rmail").href="mailto:"+EMAIL+"?subject="+encodeURIComponent("Customer review")+"&body="+encodeURIComponent(rt);
-  var box=document.getElementById("rok");box.classList.add("show");box.focus();
-  try{navigator.clipboard.writeText(rt)}catch(err){}
-});
-
-/* ---------- LIVE REVIEWS FROM GOOGLE SHEET ---------- */
-var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeDuwS7VRbY7i_gaHWLp3GT9NlKUASBOoQDwS8P4TMcY9PUsQ/formResponse";
+/* ---------- FEEDBACK FORM (sends to Google Form) ---------- */
 var rt="";
 
 function showReviewResult(sent){
-  document.getElementById("rtitle").textContent=sent?"Thank You for your feedback!":"We could not send it automatically";
+  document.getElementById("rtitle").textContent=sent?"Thank You for Your Feedback!":"We Could Not Send It Automatically";
   document.getElementById("rtext").textContent=sent
     ?"We received your review. You can also send a copy by Messenger or email if you like."
     :"Please send it to us on Messenger or by email using the buttons below. Your review is copied, so you can paste it.";
@@ -90,6 +72,7 @@ function showReviewResult(sent){
 
 document.getElementById("rf").addEventListener("submit",function(e){
   e.preventDefault();
+  var form=this;
   var rate=document.querySelector('input[name="rate"]:checked');
   var ok=true;
   document.getElementById("er").textContent=rate?"":(ok=false,"Choose a star rating.");
@@ -116,14 +99,66 @@ document.getElementById("rf").addEventListener("submit",function(e){
   data.append("entry.688939052",rate.value);
   data.append("entry.142515444",v("rc"));
 
-  var btn=this.querySelector('button[type="submit"]');
+  var btn=form.querySelector('button[type="submit"]');
   btn.disabled=true;btn.textContent="Sending...";
   fetch(FORM_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:data})
-    .then(function(){showReviewResult(true)})
+    .then(function(){showReviewResult(true);form.reset()})
     .catch(function(){showReviewResult(false)})
-    .then(function(){btn.disabled=false;btn.textContent="Send my feedback"});
+    .then(function(){btn.disabled=false;btn.textContent="Send my Feedback"});
 });
 
+/* ---------- LIVE REVIEWS FROM GOOGLE SHEET ---------- */
+function parseCSV(t){
+  var rows=[],row=[],f="",q=false;
+  for(var i=0;i<t.length;i++){
+    var c=t[i];
+    if(q){
+      if(c==='"'){ if(t[i+1]==='"'){f+='"';i++;} else q=false; }
+      else f+=c;
+    } else if(c==='"') q=true;
+    else if(c===","){row.push(f);f="";}
+    else if(c==="\n"||c==="\r"){
+      if(c==="\r"&&t[i+1]==="\n")i++;
+      row.push(f);f="";rows.push(row);row=[];
+    } else f+=c;
+  }
+  if(f||row.length){row.push(f);rows.push(row);}
+  return rows;
+}
+
+function loadReviews(){
+  var list=document.getElementById("reviewList");
+  if(!list||REVIEWS_CSV.indexOf("PASTE_")===0||REVIEWS_CSV.indexOf("/edit")>-1)return;
+  fetch(REVIEWS_CSV+(REVIEWS_CSV.indexOf("?")>-1?"&":"?")+"t="+Date.now())
+    .then(function(r){return r.text()})
+    .then(function(txt){
+      var rows=parseCSV(txt);
+      if(rows.length<2)return;
+      var head=rows[0].map(function(h){return h.toLowerCase()});
+      function col(k){for(var i=0;i<head.length;i++){if(head[i].indexOf(k)>-1)return i}return -1}
+      var iN=col("name"),iS=col("service"),iR=col("rating"),iC=col("comment"),iA=col("approved");
+      var shown=0;
+      list.innerHTML="";
+      rows.slice(1).reverse().forEach(function(r){
+        if(iA>-1&&(r[iA]||"").trim().toLowerCase()!=="yes")return;
+        if(iC<0||!r[iC])return;
+        var n=Math.max(1,Math.min(5,parseInt(r[iR])||5));
+        var card=document.createElement("div");card.className="card";
+        var st=document.createElement("p");st.className="stars";
+        st.textContent="★".repeat(n)+"☆".repeat(5-n);
+        var cm=document.createElement("p");cm.textContent=r[iC];
+        var who=document.createElement("p");who.className="who";
+        who.textContent=(r[iN]||"Anonymous")+(r[iS]?" · "+r[iS]:"");
+        card.appendChild(st);card.appendChild(cm);card.appendChild(who);
+        list.appendChild(card);shown++;
+      });
+      if(!shown)list.innerHTML='<p class="note">No Reviews Yet. Be the first to share your experience.</p>';
+    })
+    .catch(function(){});
+}
+loadReviews();
+
+/* ---------- LIVE OPEN / CLOSED STATUS (Philippine time) ---------- */
 function updateHoursStatus(){
   var el=document.getElementById("hoursStatus"); if(!el)return;
   var pill=document.querySelector(".hours");
@@ -133,8 +168,14 @@ function updateHoursStatus(){
     if(p.type==="weekday")wd=p.value;
     if(p.type==="hour")h=parseInt(p.value,10);
     if(p.type==="minute")m=parseInt(p.value,10);
-    
   });
+  // TEST MODE: add ?t=Mon-14:30 to the address to fake the day and time
+  var tt=(location.search.match(/[?&]t=(Sun|Mon|Tue|Wed|Thu|Fri|Sat)-(\d{1,2}):(\d{2})/i)||[]);
+  if(tt.length){
+    wd=tt[1].charAt(0).toUpperCase()+tt[1].slice(1).toLowerCase();
+    h=parseInt(tt[2],10);
+    m=parseInt(tt[3],10);
+  }
   var days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   var idx=days.indexOf(wd);
   function openH(i){return (i===0||i===6)?9:8}
