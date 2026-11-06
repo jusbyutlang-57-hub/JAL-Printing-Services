@@ -32,7 +32,8 @@
 <div class="page" id="home">
  <div class="hero">
   <div class="wrap">
-   <div class="hours"><b></b>OPEN MONDAY TO SUNDAY</div>
+   <div class="hours"><b></b><span>OPEN MONDAY TO SUNDAY</span><a class="hours-link" href="#contact">View Working Hours <i aria-hidden="true">→</i></a></div>
+   <p class="hours-status" id="hoursStatus"></p>
    <h1>Print that Looks Sharp.<br>Delivered on Time.</h1>
    <p>Document Printing, Format &amp; Style, Photoshop ID, and many more. Printed locally in P-3, San Teodoro, Bunawan, Agusan del Sur. Send your artwork and get a quote today!</p>
    <div class="acts"><a class="btn" href="#quote">Get a Quote / Upload Artwork</a><a class="btn ghost" href="#services">View services &amp; pricing</a></div>
@@ -113,6 +114,7 @@
  <p style="margin-top:24px"><a class="btn" href="#quote">Get a Quote / Upload Artwork</a></p>
 </div></section></div>
 
+
 <!-- ABOUT US -->
 <div class="page" id="about"><section><div class="wrap">
  <h1>About JAL Printing Services</h1>
@@ -145,8 +147,9 @@
  <form id="rf" novalidate>
   <div class="two">
    <label>Your Name (optional)<input id="rn" autocomplete="name"></label>
-   <label>Service You Used<select id="rs"><option>Thesis Outline/Manuscript Formatting</option><option>Document Printing</option><option>Photoshop ID</option><option>Lamination</option><option>Softbinding</option><option>Other</option></select></label>
+   <label>Service You Received / Used<select id="rs"><option value="Thesis Outline/Manuscript Format &amp; Styling">Thesis Outline/Manuscript Format &amp; Styling</option><option value="Document Printing">Document Printing</option><option value="Photoshop ID (1x1 / 2x2)">Photoshop ID (1x1 / 2x2)</option><option value="Lamination">Lamination</option><option value="Softbinding (School / Project Purposes)">Softbinding (School / Project Purposes)</option><option value="Other">Other</option></select></label>
   </div>
+  
   <fieldset class="rate">
    <legend>Your Rating</legend>
    <div class="stars-in">
@@ -158,26 +161,28 @@
    </div>
    <span class="err" id="er"></span>
   </fieldset>
-  <label>Your comment<textarea id="rc" rows="4" placeholder="What went well? What can we do better?" required></textarea><span class="err" id="ec"></span></label>
+  <label>Comments / Recommendations: <textarea id="rc" rows="4" placeholder="What went well? What can we do better? What can we improved?" required></textarea><span class="err" id="ec"></span></label>
   <label class="check"><input type="checkbox" id="rp"> You may show my review on the website</label>
-  <button class="btn" type="submit">Send my feedback</button>
+  <button class="btn" type="submit">Send my Feedback</button>
  </form>
 
- <div class="ok" id="rok" role="status" tabindex="-1">
-  <h3>Thank You for your feedback!</h3>
-  <p>Send it to us on Messenger. Your review is copied, so paste it into the chat. You can also send it by email.</p>
+  <div class="ok" id="rok" role="status" tabindex="-1">
+  <h3 id="rtitle">Thank You for Your Feedback!</h3>
+  <p id="rtext">We received your review. You can also send a copy by Messenger or email if you like.</p>
+
   <pre id="rsum"></pre>
-  <p><a class="btn" id="msgr4" href="#" target="_blank" rel="noopener">Open Messenger</a> <a class="btn ghost" id="rmail" href="#">Send by email</a></p>
+  <p><a class="btn" id="msgr4" href="#" target="_blank" rel="noopener">Open Messenger</a> <a class="btn ghost" id="rmail" href="#">Send by Email</a></p>
  </div>
 
  <div class="review-links">
-  <h2>Review us online</h2>
+  <h2>Review us Online</h2>
   <p>Your honest review on Google or Facebook helps other customers find us.</p>
-  <p><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeDuwS7VRbY7i_gaHWLp3GT9NlKUASBOoQDwS8P4TMcY9PUsQ/viewform?usp=header" target="_blank" rel="noopener">WRITE A REVIEW</a></p>
   <p>
+    <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeDuwS7VRbY7i_gaHWLp3GT9NlKUASBOoQDwS8P4TMcY9PUsQ/viewform?usp=header" target="_blank" rel="noopener">Write a Review via Google Form</a>
     <a class="btn" href="https://g.page/r/CeFSKcNLoWEuEBM/review" target="_blank" rel="noopener">Review Us on Google</a>
-    <a class="btn ghost" href="https://www.facebook.com/profile.php?id=61596203884366" target="_blank" rel="noopener">Review us on Facebook</a>
-  </p></div>
+    <a class="btn ghost" href="https://www.facebook.com/profile.php?id=61596203884366" target="_blank" rel="noopener">Review Us on Facebook</a>
+  </p>
+  </div>
 </div></section></div>
 
 <!-- CONTACT US -->
@@ -185,15 +190,15 @@
  <h1>Contact Us</h1>
  <div class="split">
   <div class="card">
-   <h3>Visit Our Shop</h3>
+   <h3>Visit Our Local Shop</h3>
    <p>P-3 San Teodoro, Bunawan, Agusan del Sur, Philippines (at the back of the Old Baranggay Hall of Brgy. San Teodoro)</p>
-   <h3 style="margin-top:20px">Business Hours</h3>
+   <h3 style="margin-top:20px">Working Hours</h3>
    <div class="hrs-row"><span>Monday – Friday</span><b>8:00 AM – 8:00 PM</b></div>
    <div class="hrs-row"><span>Saturday - Sunday</span><b>9:00 AM - 6:00 PM</b></div>
    <h3 style="margin-top:20px">Message Us</h3>
-   <p><a class="btn" id="msgr2" href="#" target="_blank" rel="noopener">Chat on Messenger</a></p>
+   <p><a class="btn" id="msgr2" href="#" target="_blank" rel="noopener">Chat on Facebook Messenger</a></p>
    <p>Phone: <a href="tel:+639512791502">0951 279 1502</a></p>
-   <p>Email: <a href="mailto:garadon90@gmail.com">garadon90@gmail.com</a></p>
+   <p>Gmail: <a href="mailto:garadon90@gmail.com">garadon90@gmail.com</a></p>
   </div>
   <div class="card"><h3>Prefer to send a request?</h3><p>Use the quote form to share your job details and artwork.</p><p style="margin-top:14px"><a class="btn" href="#quote">Get a Quote / Upload Artwork</a></p></div>
  </div>
