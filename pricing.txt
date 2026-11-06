@@ -1,0 +1,16 @@
+<!-- SERVICES & PRICING -->
+<div class="page" id="services"><section><div class="wrap">
+ <h1>Services &amp; Pricing</h1>
+ <p class="note">Prices below are starting rates and may change with size, quantity and paper type. Send a request for an exact quote.</p>
+ <div class="tbl"><table>
+  <tr><th>Service</th><th>Details</th><th>Starting at</th></tr>
+  <tr><td>Proper Format & Style<br>(Thesis Outline / Manuscript)</td><td>per Page</td><td class="price">₱6 (The printing is included)<br>₱4 for file-only (Document & PDF Format)</td></tr>
+  <tr><td>Document Printing <br>(Black & White only)</td><td>Letter, A4, Legal</td><td class="price">₱2 (for letter & A4 size) <br>₱3 (for legal size)</td></tr>
+  <tr><td>Document Printing <br>(With Pictures / Colors)</td><td>Letter, A4, Legal</td><td class="price">₱10 / pc (for letter & A4 size) <br>₱12 / pc (for legal size)</td></tr>
+  <tr><td>Photoshop ID <br>(1x1 & 2x2)</td><td>Minimum of 3</td><td class="price">₱25 / pc</td></tr>
+  <tr><td>Lamination</td><td>ID (size-only)</td><td class="price">₱25 / pc</td></tr>
+  <tr><td>Document printing</td><td>Black and white or color, A4 / Letter / Legal</td><td class="price">₱3 / page</td></tr>
+  <tr><td>Softbinding (Project & <br>School Purposes Only)</td><td>A4, Letter / Legal</td><td class="price">₱60 / pc</td></tr>
+ </table></div>
+ <p style="margin-top:24px"><a class="btn" href="#quote">Get a Quote / Upload Artwork</a></p>
+</div></section></div>
