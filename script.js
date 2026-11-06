@@ -109,7 +109,7 @@ function loadReviews(){
       var shown=0;
       list.innerHTML="";
       rows.slice(1).reverse().forEach(function(r){
-        if(iA<0||(r[iA]||"").trim().toLowerCase()!=="yes")return;
+        if(iA>-1&&(r[iA]||"").trim().toLowerCase()!=="yes")return;
         if(iC<0||!r[iC])return;
         var n=Math.max(1,Math.min(5,parseInt(r[iR])||5));
         var card=document.createElement("div");card.className="card";
