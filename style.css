@@ -137,3 +137,4 @@ fieldset.rate{border:0;padding:0;margin:0}
 .review-links .btn{margin:0 10px 10px 0}
 .review-links .btn.ghost{color:var(--text)}
 #reviews .wrap{max-width:1080px !important}
+.card .stars{color:var(--orange)}
